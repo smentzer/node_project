@@ -1,36 +1,26 @@
-// course.js - Course route module
+// Load Express module
+const express = require('express');
 
-var express = require('express');
-var router = express.Router();
+// Create an Express object
+const app = express();
+const port = 3000;
 
-// Home page route.
-router.get('/', function (req, res) {
-  res.send("Course home page");
-})
+// set the view engine to ejs
+app.set('view engine', 'ejs');
 
-// About page route.
-router.get('/about', function (req, res) {
-  res.send("About this course");
-})
+// Setup the Routes
+var course = require("./course.js");
+var student = require("./student.js")
 
-module.exports = router;
+app.get('/', function(req, res) {
+    res.send("This is the App Level Route")
+  });
 
-
-// student.js - Student route module
-
-var express = require("express");
-var router = express.Router();
-
-// Home page route.
-router.get('/', function (req, res) {
-  res.send("Student home page");
-})
-
-// About page route.
-router.get('/profile', function (req, res) {
-  res.send("Profile for this student");
-})
-
-module.exports = router;
+app.use('/course', course);
+app.use('/student', student);
 
 
+// list for request on port 3000
+app.listen(port, function() {
+  console.log(`Example app listening on port ${port}!`)
+});
